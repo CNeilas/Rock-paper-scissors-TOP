@@ -23,26 +23,36 @@ const getHumanChoice = () => {
 const playGame = () => {
     let playerScore = 0;
     let computerScore = 0;
-    
+    let scores = `P:${playerScore}, PC:${computerScore}`;
+
     const playRound = (humanChoice, computerChoice) => {
 
         let casedHumanChoice = humanChoice.toLowerCase();
-        let scores = `P:${playerScore}, PC:${computerScore}`;
      if(casedHumanChoice == "rock" && computerChoice == "scissors" || casedHumanChoice == "paper" && computerChoice == "rock" || casedHumanChoice == "scissors" && computerChoice == "paper") {
-        playerScore++;
+        ++playerScore;
         scores = `P:${playerScore}, PC:${computerScore}`;
         return scores;
     } else if(casedHumanChoice == computerChoice) {
         scores = `P:${playerScore}, PC:${computerScore}`;
         return scores;
     } else {
-        computerScore++
+        ++computerScore
         scores = `P:${playerScore}, PC:${computerScore}`;
         return scores;
     }
 }
     for(let i = 0; i < 5; i++) {
-        console.log(playRound(getHumanChoice(), getComputerChoice()))    }
+        console.log(playRound(getHumanChoice(), getComputerChoice()))
+        if(i == 4) {
+            if(playerScore > computerScore) {
+                console.log(`${scores} You win!!` )
+            } else if(computerScore > playerScore) {
+                console.log(`${scores} You lose!!` )
+            } else {
+                console.log(`${scores} Draw !!` )
+            }
+        }
+    }
 }
 
 playGame()
