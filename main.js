@@ -1,3 +1,13 @@
+let rock = document.getElementById("rock");
+let paper = document.getElementById("paper");
+let scissors = document.getElementById("scissors");
+let player = document.getElementById("player");
+let computer = document.getElementById("computer")
+let roundsPlayed = 0;
+let playerScore = 0;
+let computerScore = 0;
+
+
 const getComputerChoice = () => {
     let randomNum = Math.floor(Math.random() * 3) + 1;
     switch (randomNum) {
@@ -13,46 +23,44 @@ const getComputerChoice = () => {
     }
 }
 
-const getHumanChoice = () => {
-    let choice = prompt("Rock, paper or scissors");
-    return choice;
-}
+const playGame = (e) => {
+    let humanChoice = e.target.id;
+    let computerChoice = getComputerChoice();
 
-
-
-const playGame = () => {
-    let playerScore = 0;
-    let computerScore = 0;
-    let scores = `P:${playerScore}, PC:${computerScore}`;
-
-    const playRound = (humanChoice, computerChoice) => {
-
-        let casedHumanChoice = humanChoice.toLowerCase();
-     if(casedHumanChoice == "rock" && computerChoice == "scissors" || casedHumanChoice == "paper" && computerChoice == "rock" || casedHumanChoice == "scissors" && computerChoice == "paper") {
-        ++playerScore;
-        scores = `P:${playerScore}, PC:${computerScore}`;
-        return scores;
-    } else if(casedHumanChoice == computerChoice) {
-        scores = `P:${playerScore}, PC:${computerScore}`;
-        return scores;
+     if(humanChoice == "rock" && computerChoice == "scissors" || humanChoice == "paper" && computerChoice == "rock" || humanChoice == "scissors" && computerChoice == "paper") {
+        playerScore++
+        player.textContent = `Player: ${humanChoice}, ${playerScore}`
+        computer.textContent = `Computer: ${computerChoice}, ${computerScore}`
+    } else if(humanChoice == computerChoice) {
+        player.textContent = `Player: ${humanChoice}, ${playerScore}`
+        computer.textContent = `Computer: ${computerChoice}, ${computerScore}`
     } else {
-        ++computerScore
-        scores = `P:${playerScore}, PC:${computerScore}`;
-        return scores;
+        computerScore++
+        player.textContent = `Player: ${humanChoice}, ${playerScore}`
+        computer.textContent = `Computer: ${computerChoice}, ${computerScore}`
     }
-}
-    for(let i = 0; i < 5; i++) {
-        console.log(playRound(getHumanChoice(), getComputerChoice()))
-        if(i == 4) {
-            if(playerScore > computerScore) {
-                console.log(`${scores} You win!!` )
-            } else if(computerScore > playerScore) {
-                console.log(`${scores} You lose!!` )
-            } else {
-                console.log(`${scores} Draw !!` )
-            }
-        }
-    }
-}
 
-playGame()
+    roundsPlayed++
+
+            if(roundsPlayed === 4) {
+            if(playerScore > computerScore) {
+                player.textContent = "Player: You win!!"
+                computer.textContent = "Computer: :c"
+            } else if(computerScore > playerScore) {
+                computer.textContent = "Computer: You lose dumbass ehhehehe!"
+                player.textContent = "Player: Kill me :(("
+            } else {
+                player.textContent = "Player: Draw :/"
+                computer.textContent = "Player: Draw :/"
+            }
+            roundsPlayed = 0
+            computerScore = 0
+            playerScore = 0
+        }
+}       
+
+
+rock.addEventListener("click", playGame)
+paper.addEventListener("click", playGame)
+scissors.addEventListener("click", playGame)
+
